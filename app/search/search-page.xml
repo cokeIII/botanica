@@ -1,4 +1,5 @@
 <Page
+    loaded="pageLoaded"
     class="page"
     navigatingTo="onNavigatingTo"  
     xmlns="http://schemas.nativescript.org/tns.xsd">
@@ -6,9 +7,12 @@
     <ActionBar class="action-bar">
         <Label class="action-bar-title" text="Search"></Label>
     </ActionBar>
-
-    <GridLayout class="page-content">
-        <Label class="page-icon fa" text="&#xf002;"></Label>
-        <Label class="page-placeholder" text="<!-- Search page content goes here -->"></Label>
-    </GridLayout>
+    <ListView items="{{ trees }}" itemTap="onItemTap" class="list-group">
+        <ListView.itemTemplate>
+            <StackLayout  class="list-group-item">
+                <Image class="plant-img" src="{{ $parents['ListView'].sverPath,$parents['ListView'].sverPath+beginning }}" stretch="aspectFill" />
+                <Label text="{{ plan_name }}" textWrap="true"></Label>
+            </StackLayout>
+        </ListView.itemTemplate>
+    </ListView>
 </Page>
