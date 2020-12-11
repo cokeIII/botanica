@@ -2,17 +2,23 @@
     loaded="pageLoaded"
     class="page"
     navigatingTo="onNavigatingTo"  
-    xmlns="http://schemas.nativescript.org/tns.xsd">
-
+    xmlns="http://schemas.nativescript.org/tns.xsd"
+    xmlns:customControl="shared/AutoComplete">
     <ActionBar class="action-bar">
         <Label class="action-bar-title" text="Search"></Label>
     </ActionBar>
-    <ListView items="{{ trees }}" itemTap="onItemTap" class="list-group">
-        <ListView.itemTemplate>
-            <StackLayout  class="list-group-item">
-                <Image class="plant-img" src="{{ $parents['ListView'].sverPath,$parents['ListView'].sverPath+beginning }}" stretch="aspectFill" />
-                <Label text="{{ plan_name }}" textWrap="true"></Label>
-            </StackLayout>
-        </ListView.itemTemplate>
-    </ListView>
+    <StackLayout width="100%" height="100%">
+        <StackLayout width="100%" orientation="horizontal" class="">
+            <customControl:AutoComplete width="80%" data = "{{ countries }}" selectedValue ="{{ selectedValue }}" id="myControl" setThreshold="1" tap="serachData"/>
+            <Label width="20%" class="fa search-text-size" text="&#xf002;" tap="serachData"/>
+        </StackLayout>
+        <ListView items="{{ trees }}" itemTap="onItemTap" class="list-group">
+            <ListView.itemTemplate>
+                <StackLayout  class="list-group-item">
+                    <Image class="plant-img" src="{{ $parents['ListView'].sverPath,$parents['ListView'].sverPath+beginning }}" stretch="aspectFill" />
+                    <Label text="{{ plan_name }}" textWrap="true"></Label>
+                </StackLayout>
+            </ListView.itemTemplate>
+        </ListView>
+    </StackLayout>
 </Page>
