@@ -1,6 +1,6 @@
 var Observable = require("data/observable")
 const httpModule = require("tns-core-modules/http")
-var API_URL = "http://10.0.5.7:7777"
+var API_URL = "http://10.0.1.78:7777"
 var serverImg = "https://rms.chontech.ac.th/server_botanica/plant/"
 const labelModule = require("tns-core-modules/ui/label")
 var bluetooth = require("nativescript-bluetooth")
@@ -11,6 +11,7 @@ var pageData = new Observable.fromObject({
     map:[],
     mapData:{},
     findPlant:[],
+    sverPath: serverImg,
 })
 let oldUUID = "";
 const arrayToObject = (array) =>
@@ -46,13 +47,15 @@ function romoveMap() {
 }
 let map
 let page
-let findPlant
+let findPlantDlg
 exports.pageLoaded = function (args) {
+    pageData.findPlant = []
     console.log("pageLoaded")
     page = args.object
     page.bindingContext = pageData
     map = page.getViewById("map")
-    findPlant = page.getViewById("findPlant")
+    dataDlg = page.getViewById("dataDlg")
+    findPlantDlg = page.getViewById("findPlant")
     if(appSettings.getString("maps")){
         arrMaps = JSON.parse(appSettings.getString("maps"))
         pageData.map = arrMaps
@@ -70,22 +73,30 @@ exports.pageLoaded = function (args) {
     bluetooth.enable().then(
         function(enabled) {
             console.log("enable")
-            bluetooth.startScanning({
-                serviceUUIDs: [],
-                seconds: 5,
-                onDiscovered: function (peripheral) {
-                    console.log("Periperhal found with UUID: " + peripheral.UUID)
-                    checkPoint(peripheral.UUID,peripheral.RSSI,pageData.map)
-                },
-                skipPermissionCheck: false,
-            }).then(function() {
-                console.log("scanning complete")
-                console.log(pageData.findPlant)
-            }, function (err) {
-                console.log("error while scanning: " + err)
-            })
+            bltScan()
         }
     )   
+}
+function bltScan(){
+    bluetooth.startScanning({
+        serviceUUIDs: [],
+        seconds: 5,
+        onDiscovered: function (peripheral) {
+            console.log("Periperhal found with UUID: " + peripheral.UUID)
+            checkPoint(peripheral.UUID,peripheral.RSSI,pageData.map)
+        },
+        skipPermissionCheck: false,
+    }).then(function() {
+        console.log("scanning complete")
+        console.log(pageData.findPlant)
+        if(pageData.findPlant.length > 0){
+            findPlantDlg.style.visibility = 'visible'
+        } else {
+            bltScan()
+        }
+    }, function (err) {
+        console.log("error while scanning: " + err)
+    })
 }
 function checkPoint(UUID,RSSI,maps){
     if(Object.keys(pageData.mapData).length !== 0){
@@ -99,9 +110,14 @@ function checkPoint(UUID,RSSI,maps){
             oldUUID = UUID
             youHere.backgroundColor = "green"
             console.log(pageData.mapData[UUID])
+            dataDlg.refresh();
+            
+            pageData.findPlant = pageData.findPlant.filter(function (el) {
+                return el.uuid != UUID 
+            });
             pageData.findPlant.push(pageData.mapData[UUID])
         } else {
-
+            
         }
     }
 }
@@ -124,5 +140,6 @@ function genPoint(x,y,id,name){
     console.log(map)
 }
 exports.closeDlg = function (args) {
-    findPlant.style.visibility = 'collapsed'
+    findPlantDlg.style.visibility = 'collapsed'
+    bltScan()
 }

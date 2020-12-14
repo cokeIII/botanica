@@ -1,6 +1,6 @@
 var Observable = require("data/observable")
 const httpModule = require("tns-core-modules/http")
-var API_URL = "http://10.0.5.7:7777"
+var API_URL = "http://10.0.1.78:7777"
 var serverImg = "https://rms.chontech.ac.th/server_botanica/plant/"
 var pageData = new Observable.fromObject({
     trees: [],

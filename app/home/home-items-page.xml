@@ -20,9 +20,15 @@
                     <label tap="closeDlg" text="&#xf057;"
                         class="far close" />
                 </FlexboxLayout>
-                <StackLayout class="content">
-                    <Label text="End..." class="txt-s">
-                    </Label>
+                <StackLayout class="content" height="100%">
+                    <ListView items="{{ findPlant }}" itemTap="onItemTap" class="list-group" id="dataDlg">
+                        <ListView.itemTemplate>
+                            <StackLayout  class="list-group-item">
+                                <Image class="plant-img" src="{{ $parents['ListView'].sverPath,$parents['ListView'].sverPath+beginning }}" stretch="aspectFill" />
+                                <Label text="{{ plan_name }}" textWrap="true"></Label>
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
                 </StackLayout>
                 <FlexboxLayout class="actions">
                     <Button tap="closeDlg" text="OK"
