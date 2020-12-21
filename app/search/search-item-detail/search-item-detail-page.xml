@@ -5,7 +5,7 @@
     <ActionBar class="action-bar">
         <NavigationButton tap="onBackButtonTap" android.systemIcon="ic_menu_back"/>
         
-        <Label class="action-bar-title" text="{{ plan_name }}"></Label>
+        <Label class="action-bar-title" text="{{ plant_name }}"></Label>
     </ActionBar>
     <ScrollView width="100%" height="100%">
         <StackLayout class="font-detail">
@@ -25,29 +25,55 @@
             <Image visibility="{{trunk !='' ? 'visible':'collapse'}}" class="plant-img" src="{{ sverPath+trunk }}" stretch="aspectFill" />
             
             <Label text="ชื่อ" class="font-H"></Label>
-            <Label text="{{ plan_name }}" textWrap="true"></Label>
+            <Label text="{{ plant_name }}" textWrap="true"></Label>
+            <Label text="ชื่อภาษาอังกฤษ" class="font-H"></Label>
+            <Label text="{{ plant_nameeng }}" textWrap="true"></Label>
             <Label text="ชื่อพื้นเมือง" class="font-H"></Label>
             <Label text="{{ name_native }}" textWrap="true"></Label>
             <Label text="ชื่อวิทยาศาสตร์" class="font-H"></Label>
             <Label text="{{ name_scientific }}" textWrap="true"></Label>
-            <Label text="ลักษณะเด่น" class="font-H"></Label>
+            <Label text="ชื่อพรรณไม้" class="font-H"></Label>
+            <Label text="{{ veg_name }}" textWrap="true"></Label>
+            <Label text="อาณาจักร" class="font-H"></Label>
+            <Label text="{{ kingdom }}" textWrap="true"></Label>
+            <Label text="หมวด" class="font-H"></Label>
+            <Label text="{{ division }}" textWrap="true"></Label>
+            <Label text="อาณาจักร" class="font-H"></Label>
+            <Label text="{{ kingdom }}" textWrap="true"></Label>
+            <Label text="ชั้น" class="font-H"></Label>
+            <Label text="{{ class }}" textWrap="true"></Label>
+            <Label text="อันดับ" class="font-H"></Label>
+            <Label text="{{ orders }}" textWrap="true"></Label>
+            <Label text="วงศ์" class="font-H"></Label>
+            <Label text="{{ family }}" textWrap="true"></Label>
+            <Label text="สกุล" class="font-H"></Label>
+            <Label text="{{ genus }}" textWrap="true"></Label>
+            <Label text="สปีชีส์" class="font-H"></Label>
+            <Label text="{{ species }}" textWrap="true"></Label>
+            <Label text="ลักษณะเด่นของพืช" class="font-H"></Label>
             <Label text="{{ plant_features }}" textWrap="true"></Label>
-            <Label text="การปลูก" 3class="font-H"></Label>
+            <Label text="การปลูก" class="font-H"></Label>
             <Label text="{{ trans_plant }}" textWrap="true"></Label>
-            <Label text="การขยายพันธ์" class="font-H"></Label>
+            <Label text="วิธีการขยายพันธ์ุ" class="font-H"></Label>
             <Label text="{{ Propagation_name }}" textWrap="true"></Label>
+            <Label text="สรรพคุณ" class="font-H"></Label>
+            <Label text="ส่วนของต้นไม้" class="font-H"></Label>
+            <Label text="{{ properties }}" textWrap="true"></Label>
             <Label text="การใช้ประโยชน์" class="font-H"></Label>
             <Label text="{{ Utilization }}" textWrap="true"></Label>
-            <Label text="ทวีปกำเนิด" class="font-H"></Label>
-            <Label text="{{ zone_name }}" textWrap="true"></Label>
-            <Label text="ชื่อวงศ์" class="font-H"></Label>
-            <Label text="{{ family_name }}" textWrap="true"></Label>
             <Label text="รายละเอียดต้นไม้" class="font-H"></Label>
-            <Label text="{{ plan_detail }}" textWrap="true"></Label>
-            <Label text="สรรพคุณ" class="font-H"></Label>
-            <Label text="{{ properties_name }}" textWrap="true"></Label>
-            <Label text="บริเวณที่พบ" class="font-H"></Label>
+            <Label text="{{ plant_detail }}" textWrap="true"></Label>
+            <Label text="ชื่อถิ่นกำเนิด" class="font-H"></Label>
+            <Label text="{{ Origin_name }}" textWrap="true"></Label>
+            <Label text="ชื่อทวีป" class="font-H"></Label>
+            <Label text="{{ zone_name }}" textWrap="true"></Label>
+            <Label text="ชื่อทวีป" class="font-H"></Label>
+            <Label text="{{ zone_name }}" textWrap="true"></Label>
+            <Label text="ตำเเหน่งที่อยู่ต้นไม้" class="font-H"></Label>
             <Label text="{{ position }}" textWrap="true"></Label>
+            <Label text="อายุขัย" class="font-H"></Label>
+            <Label text="{{ lifespan_plant }}" textWrap="true"></Label>
+
         </StackLayout>
     </ScrollView>
 </Page>

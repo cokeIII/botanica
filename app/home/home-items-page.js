@@ -1,6 +1,6 @@
 var Observable = require("data/observable")
 const httpModule = require("tns-core-modules/http")
-var API_URL = "http://10.0.1.78:7777"
+var API_URL = "http://192.168.43.50:7777"
 var serverImg = "https://rms.chontech.ac.th/server_botanica/plant/"
 const labelModule = require("tns-core-modules/ui/label")
 var bluetooth = require("nativescript-bluetooth")
@@ -28,9 +28,10 @@ fetch(API_URL + "/getMap", {
     console.log(response.data)
     pageData.map = response.data
     appSettings.setString("maps", JSON.stringify(response.data))
-    pageData.mapData = arrayToObject(JSON.Stringify(response.data))
+    pageData.mapData = arrayToObject(response.data)
 }).catch((e) => {
-    console.log('***fetch error***')
+    console.log(e)
+    console.log('***fetch error getMap***')
 });
 
 function romoveMap() {
@@ -142,4 +143,21 @@ function genPoint(x,y,id,name){
 exports.closeDlg = function (args) {
     findPlantDlg.style.visibility = 'collapsed'
     bltScan()
+}
+
+exports.onItemTap = function (args) {
+    const view = args.view;
+    const page = view.page;
+    const tappedItem = view.bindingContext;
+
+    page.frame.navigate({
+        moduleName: "home/home-item-detail/home-item-detail-page",
+        context: tappedItem,
+        animated: true,
+        transition: {
+            name: "slide",
+            duration: 200,
+            curve: "ease"
+        }
+    });
 }
