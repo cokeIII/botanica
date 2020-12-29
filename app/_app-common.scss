@@ -2,8 +2,9 @@
 // This is where the vast majority of your CSS code goes.
 // Font icon class
 .fa {
-   font-family: "FontAwesome";
+    font-family: "FontAwesome";
 }
+
 // Common page class
 .page-content {
     .page-placeholder {
@@ -12,9 +13,8 @@
         vertical-align: center;
         horizontal-align: center;
     }
-
     .page-icon {
-        font-size: 72;
+        font-size: 96;
         vertical-align: top;
         horizontal-align: center;
         color: $page-icon-color;
@@ -25,4 +25,8 @@
 //Action bar
 ActionBar .action-bar-title {
     horizontal-align: center;
+}
+
+.action-bar {
+    background-color: rgb(106, 180, 230);
 }

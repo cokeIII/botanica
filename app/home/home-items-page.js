@@ -8,17 +8,17 @@ const appSettings = require("application-settings")
 require("nativescript-dom")
 
 var pageData = new Observable.fromObject({
-    map:[],
-    mapData:{},
-    findPlant:[],
+    map: [],
+    mapData: {},
+    findPlant: [],
     sverPath: serverImg,
 })
 let oldUUID = "";
 const arrayToObject = (array) =>
-array.reduce((obj, item) => {
-    obj[item.uuid] = item
-    return obj
-}, {})
+    array.reduce((obj, item) => {
+        obj[item.uuid] = item
+        return obj
+    }, {})
 
 fetch(API_URL + "/getMap", {
     method: "POST",
@@ -37,11 +37,11 @@ fetch(API_URL + "/getMap", {
 function romoveMap() {
     let mapR = page.getViewById("map")
     viewMap = mapR.getElementsByClassName('point')
-    for(let i = 0;i<viewMap.length;i++){
+    for (let i = 0; i < viewMap.length; i++) {
         mapR.removeChild(viewMap[i])
     }
     txtMap = mapR.getElementsByClassName('txt-map')
-    for(let i = 0;i<viewMap.length;i++){
+    for (let i = 0; i < viewMap.length; i++) {
         mapR.removeChild(txtMap[i])
     }
 
@@ -49,7 +49,7 @@ function romoveMap() {
 let map
 let page
 let findPlantDlg
-exports.pageLoaded = function (args) {
+exports.pageLoaded = function(args) {
     pageData.findPlant = []
     console.log("pageLoaded")
     page = args.object
@@ -57,17 +57,17 @@ exports.pageLoaded = function (args) {
     map = page.getViewById("map")
     dataDlg = page.getViewById("dataDlg")
     findPlantDlg = page.getViewById("findPlant")
-    if(appSettings.getString("maps")){
+    if (appSettings.getString("maps")) {
         arrMaps = JSON.parse(appSettings.getString("maps"))
         pageData.map = arrMaps
         pageData.mapData = arrayToObject(arrMaps)
     }
     romoveMap()
-    if(Object.keys(pageData.map).length !== 0){
+    if (Object.keys(pageData.map).length !== 0) {
         console.log(pageData.map)
-        
+
         pageData.map.forEach(element => {
-            genPoint(element.x,element.y,element.uuid,element.name);
+            genPoint(element.x, element.y, element.uuid, element.name);
         });
     }
 
@@ -76,34 +76,36 @@ exports.pageLoaded = function (args) {
             console.log("enable")
             bltScan()
         }
-    )   
+    )
 }
-function bltScan(){
+
+function bltScan() {
     bluetooth.startScanning({
         serviceUUIDs: [],
         seconds: 5,
-        onDiscovered: function (peripheral) {
+        onDiscovered: function(peripheral) {
             console.log("Periperhal found with UUID: " + peripheral.UUID)
-            checkPoint(peripheral.UUID,peripheral.RSSI,pageData.map)
+            checkPoint(peripheral.UUID, peripheral.RSSI, pageData.map)
         },
         skipPermissionCheck: false,
     }).then(function() {
         console.log("scanning complete")
         console.log(pageData.findPlant)
-        if(pageData.findPlant.length > 0){
+        if (pageData.findPlant.length > 0) {
             findPlantDlg.style.visibility = 'visible'
         } else {
             bltScan()
         }
-    }, function (err) {
+    }, function(err) {
         console.log("error while scanning: " + err)
     })
 }
-function checkPoint(UUID,RSSI,maps){
-    if(Object.keys(pageData.mapData).length !== 0){
-        let youHere = page.getViewById(UUID) 
-        if(pageData.mapData[UUID] !== undefined) {
-            if(oldUUID){
+
+function checkPoint(UUID, RSSI, maps) {
+    if (Object.keys(pageData.mapData).length !== 0) {
+        let youHere = page.getViewById(UUID)
+        if (pageData.mapData[UUID] !== undefined) {
+            if (oldUUID) {
                 youHere = page.getViewById(oldUUID)
                 youHere.backgroundColor = "red"
             }
@@ -112,40 +114,42 @@ function checkPoint(UUID,RSSI,maps){
             youHere.backgroundColor = "green"
             console.log(pageData.mapData[UUID])
             dataDlg.refresh();
-            
-            pageData.findPlant = pageData.findPlant.filter(function (el) {
-                return el.uuid != UUID 
+
+            pageData.findPlant = pageData.findPlant.filter(function(el) {
+                return el.uuid != UUID
             });
             pageData.findPlant.push(pageData.mapData[UUID])
         } else {
-            
+
         }
     }
 }
-function genPoint(x,y,id,name){
+
+function genPoint(x, y, id, name) {
     let myLabel = new labelModule.Label()
     let myLabelText = new labelModule.Label()
 
-    myLabel.className = "point"
+    myLabel.className = "point fa"
+    myLabel.text = "🌲"
     myLabel.id = id
-    myLabel.marginTop = ""+y-5+"%"
-    myLabel.marginLeft = ""+x+"%"
-    myLabel.style.zIndex="-1"
+    myLabel.marginTop = "" + y - 8 + "%"
+    myLabel.marginLeft = "" + x - 8 + "%"
+    myLabel.style.zIndex = "-1"
     myLabelText.text = name
     myLabelText.class = "txt-map"
-    myLabelText.marginLeft = ""+x+"%"
-    myLabelText.marginTop = ""+(y-5)+"%"
-    myLabelText.style.zIndex="-1"
+    myLabelText.marginLeft = "" + x - 8 + "%"
+    myLabelText.marginTop = "" + (y - 11) + "%"
+    myLabelText.style.zIndex = "-1"
     map.addChild(myLabel)
     map.addChild(myLabelText)
     console.log(map)
 }
-exports.closeDlg = function (args) {
+exports.closeDlg = function(args) {
     findPlantDlg.style.visibility = 'collapsed'
     bltScan()
 }
 
-exports.onItemTap = function (args) {
+exports.onItemTap = function(args) {
     const view = args.view;
     const page = view.page;
     const tappedItem = view.bindingContext;

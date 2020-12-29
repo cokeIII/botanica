@@ -1,0 +1,17 @@
+<Page
+    loaded="pageLoaded" 
+    class="page"
+    navigatingTo="onNavigatingTo"  
+    xmlns="http://schemas.nativescript.org/tns.xsd" 
+    xmlns:Barcode="nativescript-barcodescanner"
+    >
+    
+    <ActionBar class="action-bar">
+        <Label class="action-bar-title" text="QR Scan"></Label>
+    </ActionBar>
+
+    <StackLayout class="page-content">
+        <Label class="page-icon fa" text="&#xf029;" tap="scanData"></Label>
+        <Label class="fa txt-size" text="tap for scan here" tap="scanData"></Label>
+    </StackLayout>
+</Page>

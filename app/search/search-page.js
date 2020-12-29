@@ -5,7 +5,6 @@ var serverImg = "https://rms.chontech.ac.th/server_botanica/plant/"
 var pageData = new Observable.fromObject({
     trees: [],
     searchPhrase: "",
-    bgColor: true,
     sverPath: serverImg,
     countries : [],
   })
